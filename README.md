@@ -92,19 +92,19 @@ To quantitatively assess the model's accuracy on the 20% test set, we utilized t
 
   * **Visualization:** Plots comparing the `Test Set` actuals vs. `Predicted` values are generated to visually inspect the deviation.
 
-<img src="https://github.com/user-attachments/assets/deafa52b-3d22-47cc-a87b-847bbdf398ca" width="450" />
+<img src="https://github.com/user-attachments/assets/deafa52b-3d22-47cc-a87b-847bbdf398ca" width="480" />
 
-<img src="https://github.com/user-attachments/assets/46152983-d41e-442e-8d73-17dff9b37858" width="450" />
+<img src="https://github.com/user-attachments/assets/46152983-d41e-442e-8d73-17dff9b37858" width="480" />
 
-<img src="https://github.com/user-attachments/assets/a44d3b87-1295-428e-9112-c3d2e4f56043" width="450" />
+<img src="https://github.com/user-attachments/assets/a44d3b87-1295-428e-9112-c3d2e4f56043" width="480" />
 
-<img src="https://github.com/user-attachments/assets/5497188e-2167-4809-98c5-cfcd3deb20a9" width="450" />
+<img src="https://github.com/user-attachments/assets/5497188e-2167-4809-98c5-cfcd3deb20a9" width="480" />
 
-<img src="https://github.com/user-attachments/assets/104f6f13-4dbf-4bd4-9eca-f1730d547c86" width="450" />
+<img src="https://github.com/user-attachments/assets/104f6f13-4dbf-4bd4-9eca-f1730d547c86" width="480" />
 
-<img src="https://github.com/user-attachments/assets/bf265e5e-9016-4ed2-9865-8e6116552672" width="450" />
+<img src="https://github.com/user-attachments/assets/bf265e5e-9016-4ed2-9865-8e6116552672" width="480" />
 
-<img src="https://github.com/user-attachments/assets/0f793390-a735-4211-b287-04e3e576858d" width="450" />
+<img src="https://github.com/user-attachments/assets/0f793390-a735-4211-b287-04e3e576858d" width="480" />
 
 -----
 
