@@ -106,6 +106,3 @@ To quantitatively assess the model's accuracy on the 20% test set, we utilized t
 
 
 
-### Next Step
-
-Since you are now working on **SARIMAX**, would you like a quick checklist of **assumptions** you need to verify (like Multicollinearity between your exogenous features) before you train that model?
