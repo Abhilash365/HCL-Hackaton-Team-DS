@@ -60,6 +60,9 @@ Since real-world sensitive sales data was unavailable, we engineered a synthetic
 <img width="1005" height="547" alt="image" src="https://github.com/user-attachments/assets/deafa52b-3d22-47cc-a87b-847bbdf398ca" />
 <img width="1589" height="590" alt="image" src="https://github.com/user-attachments/assets/46152983-d41e-442e-8d73-17dff9b37858" />
 <img width="1163" height="624" alt="image" src="https://github.com/user-attachments/assets/a44d3b87-1295-428e-9112-c3d2e4f56043" />
+<img width="1315" height="701" alt="image" src="https://github.com/user-attachments/assets/5497188e-2167-4809-98c5-cfcd3deb20a9" />
+<img width="1169" height="624" alt="image" src="https://github.com/user-attachments/assets/104f6f13-4dbf-4bd4-9eca-f1730d547c86" />
+<img width="1324" height="701" alt="image" src="https://github.com/user-attachments/assets/bf265e5e-9016-4ed2-9865-8e6116552672" />
 
 ## 🧠 Modeling & Strategy
 
