@@ -4,51 +4,58 @@ import os
 
 # Configuration
 DB_NAME = 'sales_analysis.db'
-TABLE_NAME = 'sales_data'
-CSV_FILE = r'C:\Users\ABHILASH\Desktop\hcl\FINAL_DATASET.csv' 
+CSV_FILE = r'C:\Users\ABHILASH\Desktop\hcl\FINAL_DATASET.csv' # Update path as needed
 
-# --- 1. Load Data ---
+# 1. Load Data
 if not os.path.exists(CSV_FILE):
-    print(f"Error: CSV file '{CSV_FILE}' not found. Please add your data file.")
+    print(f"Error: CSV file '{CSV_FILE}' not found.")
     exit()
 
 df = pd.read_csv(CSV_FILE)
-print(f"Loaded {len(df)} rows from CSV. Starting insertion...")
+print(f"Loaded {len(df)} rows from CSV.")
 
-# --- 2. Connect and Insert ---
+conn = sqlite3.connect(DB_NAME)
+cursor = conn.cursor()
+
+# Enable Foreign Key support in SQLite
+cursor.execute("PRAGMA foreign_keys = ON;")
+
 try:
-    # Connects to the database file (creates it if it doesn't exist)
-    conn = sqlite3.connect(DB_NAME)
-    
-    # Define SQL data types explicitly for precision (optional but recommended)
-    dtype_map = {
-        'date': 'TEXT',
-        'order_id': 'INTEGER',
-        'price': 'REAL',
-        'promotion_flag': 'INTEGER',
-        'total_sales': 'REAL',
-        'branch_id': 'TEXT',
-        # ... map other columns similarly using TEXT, INTEGER, REAL
-    }
-    
-    # Write DataFrame to SQL table
-    df.to_sql(
-        TABLE_NAME, 
-        conn, 
-        if_exists='replace', # Replace table if it already exists
-        index=False,         # Don't save the pandas index as a column
-        dtype=dtype_map      # Use the explicit type mapping
-    )
-    
-    print(f"✅ Data successfully inserted into table '{TABLE_NAME}' in '{DB_NAME}'.")
+    # 2. Execute your schema creation script
+    with open('data/queries.sql', 'r') as f:
+        cursor.executescript(f.read())
+    print("Schema created successfully.")
 
-    # --- 3. Run a verification query ---
-    verification_df = pd.read_sql(f"SELECT COUNT(*) AS RowCount, SUM(total_sales) AS TotalRevenue FROM {TABLE_NAME};", conn)
-    print("\nVerification Check:")
-    print(verification_df)
+    # 3. Populate Product_Lookup
+    # Extract unique product info
+    products = df[['product_id', 'product_name', 'category']].drop_duplicates()
+    products.to_sql('Product_Lookup', conn, if_exists='append', index=False, method='multi')
+    print(f"Populated Product_Lookup with {len(products)} unique products.")
 
+    # 4. Populate Branch_Lookup
+    # Extract unique branch info
+    branches = df[['branch_id', 'branch_name']].drop_duplicates()
+    branches.to_sql('Branch_Lookup', conn, if_exists='append', index=False, method='multi')
+    print(f"Populated Branch_Lookup with {len(branches)} unique branches.")
+
+    # 5. Populate Sales_Transactions
+    # Remove columns that are now in lookup tables
+    transaction_cols = [
+        'order_id', 'product_id', 'branch_id', 'date', 'day_of_week', 'month', 
+        'price', 'total_sales', 'online_sales', 'offline_sales', 'returns_count', 
+        'promotion_flag', 'festival_flag', 'holiday_flag', 'seasonal_index', 'cpi', 
+        'lag_1', 'lag_7', 'lag_30', 'rolling_mean_7', 'rolling_mean_30'
+    ]
+    transactions = df[transaction_cols]
+    
+    transactions.to_sql('Sales_Transactions', conn, if_exists='append', index=False, method='multi')
+    print(f"Populated Sales_Transactions with {len(transactions)} rows.")
+    
+    print("✅ Data loading complete!")
+
+except sqlite3.IntegrityError as e:
+    print(f"Integrity Error (Duplicate Data?): {e}")
 except Exception as e:
     print(f"An error occurred: {e}")
 finally:
-    if 'conn' in locals() and conn:
-        conn.close()
+    conn.close()
