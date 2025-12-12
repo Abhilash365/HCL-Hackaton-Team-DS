@@ -13,7 +13,7 @@ The project evolves from univariate models (**ARIMA/SARIMA**) to multivariate mo
 ## 🛠️ Tech Stack
 
   * **Language:** Python
-  * **Database:** PostgreSQL (Localhost)
+  * **Database:** SQLite
   * **Libraries:** `pandas`, `numpy`, `matplotlib`, `seaborn`, `statsmodels`, `psycopg2` / `sqlalchemy`, `scikit-learn`, `python-dotenv`
 
 
@@ -27,7 +27,7 @@ The project evolves from univariate models (**ARIMA/SARIMA**) to multivariate mo
 The project pipeline consists of the following stages:
 
 1.  **Synthetic Data Generation:** Created a custom dataset simulating sales environments with added relevant features (e.g., marketing spend, seasonality, holidays).
-2.  **Database Integration:** Uploaded the generated `.csv` data into a local PostgreSQL instance.
+2.  **Database Integration:** Uploaded the generated .csv data into a local SQLite database.
 3.  **EDA & Preprocessing:** Performed Exploratory Data Analysis to understand trends and seasonality.
 4.  **Modeling (Phase 1):** Implemented ARIMA and SARIMA for univariate time series forecasting.
 5.  **Modeling (Phase 2):** Currently implementing SARIMAX to utilize exogenous variables.
@@ -41,11 +41,11 @@ The project pipeline consists of the following stages:
 Since real-world sensitive sales data was unavailable, we engineered a synthetic dataset.
 
   * **Features Added:** Beyond the target variable (`Sales`), we generated additional features relevant to the domain to be used in multivariate analysis later.
-  * **Storage:** The final dataset was exported as a `.csv` and loaded into PostgreSQL for structured querying.
+  * **Storage:** The final dataset was exported as a .csv and loaded into SQLite for structured querying.
 
 ### 2\. Database Connection
 
-  * **Connection:** Established a connection between the Python environment and the PostgreSQL server hosted on `localhost`.
+  * **Connection:** Established a connection between the Python environment and the local SQLite database file.
   * **Querying:** Data is fetched directly from the database for preprocessing to simulate a production data pipeline.
 
 ### 3\. Preprocessing & Split
