@@ -30,8 +30,8 @@ The project pipeline consists of the following stages:
 2.  **Database Integration:** Uploaded the generated .csv data into a local SQLite database.
 3.  **EDA & Preprocessing:** Performed Exploratory Data Analysis to understand trends and seasonality.
 4.  **Modeling (Phase 1):** Implemented ARIMA and SARIMA for univariate time series forecasting.
-5.  **Modeling (Phase 2):** Currently implementing SARIMAX to utilize exogenous variables.
-
+5.  **Modeling (Phase 2):** Implemented **SARIMAX** with hyperparameter tuning (using `auto_arima`) to incorporate exogenous variables like Price, CPI, and Holidays.
+6.  **Deployment:** Built an interactive **Streamlit Dashboard** for real-time forecasting and scenario planning.
 -----
 
 ## 📊 Data Methodology
@@ -69,13 +69,13 @@ We established a baseline using standard statistical models that rely only on pa
       * **SARIMA:** (Seasonal ARIMA) to capture repeating seasonal patterns in the synthetic data.
   * **Outcome:** Successfully trained on the 80% split and generated a forecast for the **next 3 months**.
 
-### Phase 2: Multivariate Forecasting (In Progress)
+### Phase 2: Multivariate Forecasting (Completed)
 
-We are currently upgrading the model to **SARIMAX** (Seasonal AutoRegressive Integrated Moving Average with eXogenous regressors).
+We upgraded the model to **SARIMAX** to capture the impact of external business drivers.
 
-  * **Goal:** To incorporate the "new features" generated in step 1 (e.g., marketing events or economic indicators) as exogenous variables.
-  * **Current Task:** Refining feature engineering and handling outliers in independent variables to improve model robustness.
-
+  * **Exogenous Variables:** Integrated features like `Price`, `CPI`, `Promotion_Flag`, and `Holiday_Flag`.
+  * **Hyperparameter Tuning:** Utilized `pmdarima.auto_arima` to automatically identify the optimal `(p,d,q)` and seasonal `(P,D,Q)s` parameters, minimizing the AIC score.
+  * **Outcome:** Achieved a more robust model that responds to price changes and marketing events, validated against the test set.
 -----
 
 ## 📉 Results
@@ -110,13 +110,23 @@ To quantitatively assess the model's accuracy on the 20% test set, we utilized t
 
 -----
 
+## 💻 Interactive Dashboard
 
+We have deployed a local Streamlit application  to make the forecasting engine accessible to business users.
+
+https://hcl-app-7zsrtkwyzp4csj6u2xb2bj.streamlit.app/
+
+**Key Features:**
+* **Model Selection:** Choose between pre-trained models (ARIMA, SARIMA, SARIMAX).
+* **Dynamic Forecasting:** Adjust the forecast horizon (e.g., 7, 30, 90 days) using a slider.
+* **Scenario Planning (SARIMAX):** Simulate business scenarios by adjusting future parameters:
+    * *What if we increase the price by 10%?*
+    * *What if we run a promotion next week?*
+* **Visualizations:** Interactive plots showing historical data, future forecasts, and confidence intervals.
 
 ## 🔮 Future Scope
-
-  * **Hyperparameter Tuning:** Implementing `auto_arima` for optimal parameter selection.
   * **Deep Learning:** Experimenting with LSTM (Long Short-Term Memory) networks for comparison.
-  * **Dashboard:** Creating a Streamlit or Flask dashboard to visualize the 3-month forecast dynamically.
+  
 
 -----
 
