@@ -91,7 +91,8 @@ To quantitatively assess the model's accuracy on the 20% test set, we utilized t
   * **Forecast Horizon:** 3 Months.
 
   * **Visualization:** Plots comparing the `Test Set` actuals vs. `Predicted` values are generated to visually inspect the deviation.
-<img width="994" height="528" alt="sarimax" src="https://github.com/user-attachments/assets/d022dd04-83e5-4ccc-a7fc-ce0585613575" />
+
+<img width="994" height="528" alt="sari-hyper" src="https://github.com/user-attachments/assets/e7890719-f900-4f73-9925-412c3e409de3" />
 
 <img src="https://github.com/user-attachments/assets/deafa52b-3d22-47cc-a87b-847bbdf398ca" width="480" />
 
