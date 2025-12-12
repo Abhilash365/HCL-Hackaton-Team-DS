@@ -1,83 +1,127 @@
-# HCL-Hackaton-Team-DS
 
-# Time Series Sales Forecasting Project
 
-## 🎯 Project Overview and Objectives
+# 📈 Synthetic Sales Forecasting Engine
 
-This project is a comprehensive solution for time series forecasting, focusing on ingesting structured sales data, conducting in-depth analysis, developing and evaluating robust forecasting models (ARIMA and SARIMA), and exposing the final model for practical use. The primary goal is to predict future sales with a horizon of 3 months to support strategic planning and inventory management.
+## 📖 Overview
 
-The core objectives addressed in this project are:
+This project focuses on forecasting future sales trends using time series analysis. We generated a comprehensive synthetic dataset with custom features, stored it in a PostgreSQL database, and built predictive models to forecast sales for the upcoming quarter (3 months).
 
-1.  **Ingests and preprocesses structured data:** Clean, transform, and prepare the raw sales data for time series analysis.
-2.  **Perform exploratory data analysis (EDA) and visualize distributions:** Understand the data structure, identify trends, seasonality, and stationarity, and visualize key metrics.
-3.  **Identify correlations and relevant features:** Determine the relationship between sales and other exogenous variables (e.g., holidays, promotions, lagged values).
-4.  **Trains, optimizes, and evaluates a forecasting model:** Implement and tune statistical time series models like ARIMA and SARIMA.
-5.  **Set a forecast horizon of 3 months:** Generate predictions for the next 90 days following the end of the historical data.
-6.  **Exposes the model through an API or simple UI:** Create a functional interface for users to input a date range and receive a sales forecast.
-7.  **Generates insights and visual explanations about predictions and how many are done:** Provide a clear breakdown of the model's performance, the confidence intervals of predictions, and business-relevant takeaways.
+The project evolves from univariate models (**ARIMA/SARIMA**) to multivariate models (**SARIMAX**) to leverage external features for higher accuracy.
 
-## 📁 Project Structure
+-----
 
-The project utilizes a clear, modular structure for data processing, analysis, and modeling.
+## 🛠️ Tech Stack
 
-| File Name | Description |
-| :--- | :--- |
-| `FINAL_DATASET_3ys.csv` | The raw, structured dataset containing 3 years of daily sales transactions and related features. |
-| `eda_of_Synthetic_Code.ipynb` | Jupyter notebook for **Exploratory Data Analysis (EDA)**. Contains initial data quality checks, statistical summaries, and time series visualizations (trend, seasonality, noise decomposition). |
-| `arima1.ipynb` | Jupyter notebook for **ARIMA Modeling**. Focuses on classical ARIMA for non-seasonal time series forecasting, including stationarity testing (e.g., ADF test), model selection, fitting, and 3-month forecasting. |
-| `sarima.ipynb` | Jupyter notebook for **SARIMA Modeling**. Focuses on Seasonal Auto-Regressive Integrated Moving Average to capture periodic patterns (e.g., weekly or monthly seasonality). Includes model optimization (e.g., using `auto_arima`). |
-| `model_api.py` (Hypothetical) | Python script for the API/UI. Loads the best-performing model (`arima_model.joblib` or `sarima_model.joblib`) and serves predictions via a framework like Flask or Streamlit. |
-| `requirements.txt` (Hypothetical) | List of required Python packages and their versions (e.g., `pandas`, `numpy`, `statsmodels`, `pmdarima`, `scikit-learn`, `flask`/`streamlit`). |
+  * **Language:** Python
+  * **Database:** PostgreSQL (Localhost)
+  * **Libraries:** `pandas`, `numpy`, `matplotlib`, `seaborn`, `statsmodels`, `psycopg2` / `sqlalchemy`, `scikit-learn`, `python-dotenv`
 
-## 🛠️ Methodology and Implementation
+-----
 
-### 1. Data Ingestion & Preprocessing
+## 📂 Project Directory Structure
 
-* **Ingestion:** The `FINAL_DATASET_3ys.csv` is loaded using `pandas`.
-* **Time Series Indexing:** The `date` column is converted to a datetime object and set as the index.
-* **Aggregation:** Transactional data is aggregated to the required frequency (e.g., daily total sales) for time series analysis.
-* **Feature Handling:** Missing values are addressed, and categorical features are appropriately encoded if used as exogenous variables in a SARIMAX model.
+```text
+├── data/
+│   ├── raw_synthetic_data.csv   # The initial generated dataset
+│   └── processed_data.csv       # Cleaned data ready for modeling
+├── notebooks/
+│   ├── 1_data_generation.ipynb  # Script for creating synthetic features
+│   ├── 2_eda_preprocessing.ipynb # EDA and Database connection tests
+│   └── 3_modeling_sarima.ipynb  # Phase 1 modeling (ARIMA/SARIMA)
+├── src/
+│   ├── db_connect.py            # PostgreSQL connection logic
+│   └── config.py                # Configuration settings
+├── .env                         # Database credentials (not committed)
+├── requirements.txt
+└── README.md
+```
 
-### 2. Exploratory Data Analysis (EDA)
+-----
 
-The `eda_of_Synthetic_Code.ipynb` notebook performs a deep dive into the sales data:
-* **Trend and Seasonality:** Time series plots are generated to visually inspect long-term trends and recurring seasonal patterns.
-* **Distribution Analysis:** Histograms and box plots are used to visualize the distribution of `total_sales` and check for outliers.
-* **Stationarity Check:** The Augmented Dickey-Fuller (ADF) test is performed to determine if the time series is stationary, guiding the choice of the differencing order (**d**) for the ARIMA/SARIMA models.
+## 🚀 Project Workflow
 
-### 3. Feature Identification and Correlation
+The project pipeline consists of the following stages:
 
-* Features like `promotion_flag`, `festival_flag`, `holiday_flag`, `lag_7`, and `rolling_mean_7` are analyzed for their correlation with `total_sales`.
-* Lagged values (`lag_1`, `lag_7`, `lag_30`) and rolling statistics (`rolling_mean_7`, `rolling_mean_30`) are crucial for time series prediction and are confirmed to be highly relevant.
-* Autocorrelation Function (ACF) and Partial Autocorrelation Function (PACF) plots are generated to systematically identify the appropriate lag orders (**p** and **q**) for the models.
+1.  **Synthetic Data Generation:** Created a custom dataset simulating sales environments with added relevant features (e.g., marketing spend, seasonality, holidays).
+2.  **Database Integration:** Uploaded the generated `.csv` data into a local PostgreSQL instance.
+3.  **EDA & Preprocessing:** Performed Exploratory Data Analysis to understand trends and seasonality.
+4.  **Modeling (Phase 1):** Implemented ARIMA and SARIMA for univariate time series forecasting.
+5.  **Modeling (Phase 2):** Currently implementing SARIMAX to utilize exogenous variables.
 
-### 4. Modeling, Optimization, and Evaluation
+-----
 
-The core forecasting is done using statistical time series models:
+## 📊 Data Methodology
 
-| Model | Notebook | Purpose | Key Metric | Forecast Horizon |
-| :--- | :--- | :--- | :--- | :--- |
-| **ARIMA** | `arima1.ipynb` | Models non-seasonal time series after differencing. | RMSE / MAE | **3 Months (90 Days)** |
-| **SARIMA** | `sarima.ipynb` | Accounts for both non-seasonal and seasonal components (e.g., daily/weekly seasonality). | AIC / BIC | **3 Months (90 Days)** |
+### 1\. Data Generation
 
-* **Model Training:** The time series data is split into training and testing sets.
-* **Optimization:** `auto_arima` is used in the SARIMA notebook to automatically select the optimal $$(p, d, q) \times (P, D, Q)_s$$ order based on the lowest AIC/BIC.
-* **Evaluation:** Models are evaluated on the test set using standard metrics: **Root Mean Squared Error (RMSE)** and **Mean Absolute Error (MAE)**.
-* **Persistence:** The final, optimized model (e.g., `sarima_model.joblib`) is saved for deployment.
+Since real-world sensitive sales data was unavailable, we engineered a synthetic dataset.
 
-### 5. Model Deployment (API/UI)
+  * **Features Added:** Beyond the target variable (`Sales`), we generated additional features relevant to the domain to be used in multivariate analysis later.
+  * **Storage:** The final dataset was exported as a `.csv` and loaded into PostgreSQL for structured querying.
 
-The final trained model is exposed to make predictions accessible:
+### 2\. Database Connection
 
-* **API (Recommended):** A lightweight API (e.g., using **Flask** or **FastAPI**) is set up to load the saved model. A `POST` endpoint would accept a start date and end date and return the 3-month sales forecast in JSON format.
-* **UI (Alternative):** A simple user interface (e.g., using **Streamlit**) can be implemented to allow users to select the forecast horizon and instantly visualize the predicted sales curve.
+  * **Connection:** Established a connection between the Python environment and the PostgreSQL server hosted on `localhost`.
+  * **Querying:** Data is fetched directly from the database for preprocessing to simulate a production data pipeline.
 
-### 6. Results and Insights
+### 3\. Preprocessing & Split
 
-The final stage provides clear interpretability of the model's output:
+  * **Stationarity Check:** Before modeling, we validated the stationarity of the time series using the **Augmented Dickey-Fuller (ADF) Test**. We applied differencing (Integration `d` parameter) where necessary to stabilize the mean and variance.
+  * **Train-Test Split:** The data was split into **80% Training** and **20% Testing** sets to evaluate model performance.
+  * **Outlier Handling:**
+      * *Note:* For the initial ARIMA/SARIMA models, outlier handling was deprioritized as these models relied solely on the univariate series history. Strict outlier removal is being revisited for the SARIMAX phase.
 
-* **Visual Explanations:** A plot is generated showing the historical actual sales, the model's fitted values, and the **3-month forecast** with **Confidence Intervals**. 
-* **Insights:**
-    * **Performance:** A summary of the achieved RMSE/MAE is provided. (e.g., "The SARIMA model achieved an RMSE of 129.25 on the test set.")
-    * **Forecasting Count:** The total number of predictions generated is clearly stated (e.g., "A total of 90 sales predictions were generated for the 3-month horizon.")
-    * **Model Interpretation:** Key statistical findings, such as the significance of seasonal components or the impact of external variables, are highlighted.
+-----
+
+## 🧠 Modeling & Strategy
+
+### Phase 1: Univariate Forecasting (Completed)
+
+We established a baseline using standard statistical models that rely only on past sales data.
+
+  * **Models Used:**
+      * **ARIMA:** (AutoRegressive Integrated Moving Average) for non-seasonal trends.
+      * **SARIMA:** (Seasonal ARIMA) to capture repeating seasonal patterns in the synthetic data.
+  * **Outcome:** Successfully trained on the 80% split and generated a forecast for the **next 3 months**.
+
+### Phase 2: Multivariate Forecasting (In Progress)
+
+We are currently upgrading the model to **SARIMAX** (Seasonal AutoRegressive Integrated Moving Average with eXogenous regressors).
+
+  * **Goal:** To incorporate the "new features" generated in step 1 (e.g., marketing events or economic indicators) as exogenous variables.
+  * **Current Task:** Refining feature engineering and handling outliers in independent variables to improve model robustness.
+
+-----
+
+## 📉 Results
+
+### Performance Metrics
+
+To quantitatively assess the model's accuracy on the 20% test set, we utilized the following metrics:
+
+  * **RMSE (Root Mean Squared Error):** To measure the standard deviation of the prediction errors.
+
+  * **MAPE (Mean Absolute Percentage Error):** To understand the accuracy in percentage terms.
+
+  * **Forecast Horizon:** 3 Months.
+
+  * **Visualization:** Plots comparing the `Test Set` actuals vs. `Predicted` values are generated to visually inspect the deviation.
+
+-----
+
+
+
+## 🔮 Future Scope
+
+  * **Hyperparameter Tuning:** Implementing `auto_arima` for optimal parameter selection.
+  * **Deep Learning:** Experimenting with LSTM (Long Short-Term Memory) networks for comparison.
+  * **Dashboard:** Creating a Streamlit or Flask dashboard to visualize the 3-month forecast dynamically.
+
+-----
+
+
+
+
+### Next Step
+
+Since you are now working on **SARIMAX**, would you like a quick checklist of **assumptions** you need to verify (like Multicollinearity between your exogenous features) before you train that model?
