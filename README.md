@@ -4,7 +4,7 @@
 
 ## 📖 Overview
 
-This project focuses on forecasting future sales trends using time series analysis. We generated a comprehensive synthetic dataset with custom features, stored it in a PostgreSQL database, and built predictive models to forecast sales for the upcoming quarter (3 months).
+This project focuses on forecasting future sales trends using time series analysis. We generated a comprehensive synthetic dataset with custom features, stored it in a SQLite database, and built predictive models to forecast sales for the upcoming quarter (3 months).
 
 The project evolves from univariate models (**ARIMA/SARIMA**) to multivariate models (**SARIMAX**) to leverage external features for higher accuracy.
 
