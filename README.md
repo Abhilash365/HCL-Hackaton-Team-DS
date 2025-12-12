@@ -16,25 +16,9 @@ The project evolves from univariate models (**ARIMA/SARIMA**) to multivariate mo
   * **Database:** PostgreSQL (Localhost)
   * **Libraries:** `pandas`, `numpy`, `matplotlib`, `seaborn`, `statsmodels`, `psycopg2` / `sqlalchemy`, `scikit-learn`, `python-dotenv`
 
------
 
-## 📂 Project Directory Structure
 
-```text
-├── data/
-│   ├── raw_synthetic_data.csv   # The initial generated dataset
-│   └── processed_data.csv       # Cleaned data ready for modeling
-├── notebooks/
-│   ├── 1_data_generation.ipynb  # Script for creating synthetic features
-│   ├── 2_eda_preprocessing.ipynb # EDA and Database connection tests
-│   └── 3_modeling_sarima.ipynb  # Phase 1 modeling (ARIMA/SARIMA)
-├── src/
-│   ├── db_connect.py            # PostgreSQL connection logic
-│   └── config.py                # Configuration settings
-├── .env                         # Database credentials (not committed)
-├── requirements.txt
-└── README.md
-```
+
 
 -----
 
