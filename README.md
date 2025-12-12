@@ -1,13 +1,12 @@
-Here is the updated `README.md` file. I have moved the Dashboard from "Future Scope" to the main project features, added Streamlit to the tech stack, and included a section on how to run the app locally.
 
-````markdown
+
 # 📈 Synthetic Sales Forecasting Engine
 
 ## 📖 Overview
 
 This project focuses on forecasting future sales trends using time series analysis. We generated a comprehensive synthetic dataset with custom features, stored it in a SQLite database, and built predictive models to forecast sales for the upcoming quarter (3 months).
 
-The project evolves from univariate models (**ARIMA/SARIMA**) to multivariate models (**SARIMAX**) to leverage external features for higher accuracy. Additionally, an interactive **Streamlit Dashboard** has been developed to visualize forecasts and perform scenario planning.
+The project evolves from univariate models (**ARIMA/SARIMA**) to multivariate models (**SARIMAX**) to leverage external features for higher accuracy.
 
 -----
 
@@ -15,8 +14,11 @@ The project evolves from univariate models (**ARIMA/SARIMA**) to multivariate mo
 
   * **Language:** Python
   * **Database:** SQLite
-  * **Frameworks:** `Streamlit`
-  * **Libraries:** `pandas`, `numpy`, `matplotlib`, `seaborn`, `statsmodels`, `pmdarima`, `psycopg2` / `sqlalchemy`, `scikit-learn`, `python-dotenv`
+  * **Libraries:** `pandas`, `numpy`, `matplotlib`, `seaborn`, `statsmodels`, `psycopg2` / `sqlalchemy`, `scikit-learn`, `python-dotenv`
+
+
+
+
 
 -----
 
@@ -28,8 +30,7 @@ The project pipeline consists of the following stages:
 2.  **Database Integration:** Uploaded the generated .csv data into a local SQLite database.
 3.  **EDA & Preprocessing:** Performed Exploratory Data Analysis to understand trends and seasonality.
 4.  **Modeling (Phase 1):** Implemented ARIMA and SARIMA for univariate time series forecasting.
-5.  **Modeling (Phase 2):** Implemented SARIMAX with Hyperparameter tuning (`auto_arima`) to utilize exogenous variables.
-6.  **Dashboarding:** Developed a local Streamlit application for interactive forecasting and "what-if" analysis.
+5.  **Modeling (Phase 2):** Currently implementing SARIMAX to utilize exogenous variables.
 
 -----
 
@@ -56,6 +57,7 @@ Since real-world sensitive sales data was unavailable, we engineered a synthetic
 
 -----
 
+
 ## 🧠 Modeling & Strategy
 
 ### Phase 1: Univariate Forecasting (Completed)
@@ -67,32 +69,12 @@ We established a baseline using standard statistical models that rely only on pa
       * **SARIMA:** (Seasonal ARIMA) to capture repeating seasonal patterns in the synthetic data.
   * **Outcome:** Successfully trained on the 80% split and generated a forecast for the **next 3 months**.
 
-### Phase 2: Multivariate Forecasting (Completed)
+### Phase 2: Multivariate Forecasting (In Progress)
 
-We upgraded the model to **SARIMAX** (Seasonal AutoRegressive Integrated Moving Average with eXogenous regressors).
+We are currently upgrading the model to **SARIMAX** (Seasonal AutoRegressive Integrated Moving Average with eXogenous regressors).
 
-  * **Goal:** To incorporate features like marketing events, holidays, and economic indicators as exogenous variables.
-  * **Hyperparameter Tuning:** Utilized `auto_arima` to automatically select optimal (p,d,q) and (P,D,Q,s) parameters.
-
------
-
-## 🖥️ Interactive Dashboard
-
-We have deployed a local **Streamlit App** to make the forecasting engine accessible and interactive.
-
-**Features:**
-* **Model Selection:** Choose between ARIMA, SARIMA, or SARIMAX models dynamically.
-* **Custom Horizon:** Slider to adjust the forecast period (1 to 90 days).
-* **Scenario Planning (SARIMAX only):**
-    * Adjust **Promotion Intensity** sliders to simulate the impact of future marketing campaigns.
-    * Tweak **Holiday Probabilities** to see how festive seasons impact sales predictions.
-* **Visualizations:** Interactive plots with 95% confidence intervals and key metrics (Total Projected Sales, Peak Sales Day).
-
-**How to Run:**
-```bash
-pip install -r requirements.txt
-streamlit run app.py
-````
+  * **Goal:** To incorporate the "new features" generated in step 1 (e.g., marketing events or economic indicators) as exogenous variables.
+  * **Current Task:** Refining feature engineering and handling outliers in independent variables to improve model robustness.
 
 -----
 
@@ -103,35 +85,41 @@ streamlit run app.py
 To quantitatively assess the model's accuracy on the 20% test set, we utilized the following metrics:
 
   * **RMSE (Root Mean Squared Error):** To measure the standard deviation of the prediction errors.
+
   * **MAPE (Mean Absolute Percentage Error):** To understand the accuracy in percentage terms.
+
   * **Forecast Horizon:** 3 Months.
 
-**Visualization:** Plots comparing the `Test Set` actuals vs. `Predicted` values are generated to visually inspect the deviation.
+  * **Visualization:** Plots comparing the `Test Set` actuals vs. `Predicted` values are generated to visually inspect the deviation.
 
-\<img width="994" height="528" alt="sari-hyper" src="https://github.com/user-attachments/assets/e7890719-f900-4f73-9925-412c3e409de3" /\>
+<img width="994" height="528" alt="sari-hyper" src="https://github.com/user-attachments/assets/e7890719-f900-4f73-9925-412c3e409de3" />
 
-\<img src="https://github.com/user-attachments/assets/deafa52b-3d22-47cc-a87b-847bbdf398ca" width="480" /\>
+<img src="https://github.com/user-attachments/assets/deafa52b-3d22-47cc-a87b-847bbdf398ca" width="480" />
 
-\<img src="https://github.com/user-attachments/assets/46152983-d41e-442e-8d73-17dff9b37858" width="480" /\>
+<img src="https://github.com/user-attachments/assets/46152983-d41e-442e-8d73-17dff9b37858" width="480" />
 
-\<img src="https://github.com/user-attachments/assets/a44d3b87-1295-428e-9112-c3d2e4f56043" width="480" /\>
+<img src="https://github.com/user-attachments/assets/a44d3b87-1295-428e-9112-c3d2e4f56043" width="480" />
 
-\<img src="https://github.com/user-attachments/assets/5497188e-2167-4809-98c5-cfcd3deb20a9" width="480" /\>
+<img src="https://github.com/user-attachments/assets/5497188e-2167-4809-98c5-cfcd3deb20a9" width="480" />
 
-\<img src="https://github.com/user-attachments/assets/104f6f13-4dbf-4bd4-9eca-f1730d547c86" width="480" /\>
+<img src="https://github.com/user-attachments/assets/104f6f13-4dbf-4bd4-9eca-f1730d547c86" width="480" />
 
-\<img src="https://github.com/user-attachments/assets/bf265e5e-9016-4ed2-9865-8e6116552672" width="480" /\>
+<img src="https://github.com/user-attachments/assets/bf265e5e-9016-4ed2-9865-8e6116552672" width="480" />
 
-\<img src="https://github.com/user-attachments/assets/0f793390-a735-4211-b287-04e3e576858d" width="480" /\>
+<img src="https://github.com/user-attachments/assets/0f793390-a735-4211-b287-04e3e576858d" width="480" />
 
 -----
+
+
 
 ## 🔮 Future Scope
 
+  * **Hyperparameter Tuning:** Implementing `auto_arima` for optimal parameter selection.
   * **Deep Learning:** Experimenting with LSTM (Long Short-Term Memory) networks for comparison.
-  * **Cloud Deployment:** Deploying the Streamlit app to Streamlit Cloud or AWS/Heroku for public access.
+  * **Dashboard:** Creating a Streamlit or Flask dashboard to visualize the 3-month forecast dynamically.
 
 -----
 
-```
-```
+
+
+
