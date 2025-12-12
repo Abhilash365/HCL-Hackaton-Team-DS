@@ -4,7 +4,7 @@ import os
 
 # Configuration
 DB_NAME = 'sales_analysis.db'
-CSV_FILE = r'C:\Users\ABHILASH\Desktop\hcl\FINAL_DATASET.csv' # Update path as needed
+CSV_FILE = 'FINAL_DATASET.csv'  # Make sure this path is correct relative to your script
 
 # 1. Load Data
 if not os.path.exists(CSV_FILE):
@@ -22,7 +22,8 @@ cursor.execute("PRAGMA foreign_keys = ON;")
 
 try:
     # 2. Execute your schema creation script
-    with open('data/queries.sql', 'r') as f:
+    # Ensure queries.sql is in the same directory or provide full path
+    with open('queries.sql', 'r') as f:
         cursor.executescript(f.read())
     print("Schema created successfully.")
 
@@ -48,6 +49,7 @@ try:
     ]
     transactions = df[transaction_cols]
     
+    # Use if_exists='append' to respect the schema we just created
     transactions.to_sql('Sales_Transactions', conn, if_exists='append', index=False, method='multi')
     print(f"Populated Sales_Transactions with {len(transactions)} rows.")
     
